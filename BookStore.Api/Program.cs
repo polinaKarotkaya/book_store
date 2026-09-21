@@ -1,5 +1,7 @@
 using BookStore.Api.Dtos;
 
+const string GetBookEndpointName = "GetBook";
+
 var builder = WebApplication.CreateBuilder(args);
 var app = builder.Build();
 
@@ -20,8 +22,9 @@ List<Book> books = [
 
 app.MapGet("/", () => "Hello World!");
 app.MapGet("/books", () => books);
-app.MapGet("/books/{id}", (int id) => books.Find(books => books.Id == id))
-  .WithName("GetBook");
+
+app.MapGet("/books/{id}", (int id) => books.Find(book => book.Id == id))
+  .WithName(GetBookEndpointName);
 
 app.MapPost("/books", (CreateNewBook newBook) =>
 {
@@ -35,8 +38,24 @@ app.MapPost("/books", (CreateNewBook newBook) =>
     );
 
     books.Add(book);
-    return Results.CreatedAtRoute("GetBook")
+    return Results.CreatedAtRoute(GetBookEndpointName, new {id = book.Id}, book);
 
+});
+
+app.MapPut("/books/{id}", (int id, UpdateBook updatebook) =>
+{
+    var index = books.FindIndex(book => book.Id == id);
+    
+    books[index] = new Book(
+        id,
+        updatebook.Name,
+        updatebook.Genre,
+        updatebook.Pages,
+        updatebook.Price,
+        updatebook.ReleaseDate
+    );
+
+    return Results.NoContent();
 });
 
 

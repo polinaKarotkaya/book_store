@@ -1,1 +1,27 @@
-GET http://localhost:5075/books/2
+GET http://localhost:5075/books/3
+
+###
+POST http://localhost:5075/books
+Content-Type: application/json
+
+{
+    "name": "Romeo and Juliet",
+    "genre": "novel",
+    "pages": "300",
+    "price": 20.35,
+    "releaseDate": "2021-06-23"
+}
+
+###
+
+PUT http://localhost:5075/books/3
+Content-Type: application/json
+
+{
+    "name": "Romeo and Juliet",
+    "genre": "novel",
+    "pages": "300",
+    "price": 9.35,
+    "releaseDate": "2025-06-23"
+}
+
