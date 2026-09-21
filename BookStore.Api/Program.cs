@@ -23,7 +23,12 @@ List<Book> books = [
 app.MapGet("/", () => "Hello World!");
 app.MapGet("/books", () => books);
 
-app.MapGet("/books/{id}", (int id) => books.Find(book => book.Id == id))
+app.MapGet("/books/{id}", (int id) => {
+   var book = books.Find(book => book.Id == id);
+
+   return book is null ? Results.NotFound() : Results.Ok(book);
+    
+    })
   .WithName(GetBookEndpointName);
 
 app.MapPost("/books", (CreateNewBook newBook) =>
@@ -45,6 +50,11 @@ app.MapPost("/books", (CreateNewBook newBook) =>
 app.MapPut("/books/{id}", (int id, UpdateBook updatebook) =>
 {
     var index = books.FindIndex(book => book.Id == id);
+
+    if(index == -1)
+    {
+        return Results.NotFound();
+    }
     
     books[index] = new Book(
         id,
@@ -54,6 +64,13 @@ app.MapPut("/books/{id}", (int id, UpdateBook updatebook) =>
         updatebook.Price,
         updatebook.ReleaseDate
     );
+
+    return Results.NoContent();
+});
+
+app.MapDelete("books/{id}", (int id) =>
+{
+    books.RemoveAll(book => book.Id == id);
 
     return Results.NoContent();
 });

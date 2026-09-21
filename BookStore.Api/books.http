@@ -1,4 +1,4 @@
-GET http://localhost:5075/books/3
+GET http://localhost:5075/books/6
 
 ###
 POST http://localhost:5075/books
@@ -14,7 +14,7 @@ Content-Type: application/json
 
 ###
 
-PUT http://localhost:5075/books/3
+PUT http://localhost:5075/books/6
 Content-Type: application/json
 
 {
@@ -25,3 +25,6 @@ Content-Type: application/json
     "releaseDate": "2025-06-23"
 }
 
+###
+
+DELETE http://localhost:5075/books/2
