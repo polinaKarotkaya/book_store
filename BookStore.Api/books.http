@@ -5,7 +5,7 @@ POST http://localhost:5075/books
 Content-Type: application/json
 
 {
-    "name": "Romeo and Juliet",
+    "name": "",
     "genre": "novel",
     "pages": "300",
     "price": 20.35,

@@ -7,7 +7,7 @@ public static  class BookEndpoints
 {
     const string GetBookEndpointName = "GetBook";
 
-    private static readonly List<Book> books = [
+    private static readonly List<BookDto> books = [
     new (1,
     "Little Woman",
     "novel",
@@ -40,7 +40,7 @@ public static void MapBooksEndpoints(this WebApplication app)
 
     group.MapPost("/", (CreateNewBook newBook) =>
     {
-        Book book = new(
+        BookDto book = new(
         books.Count + 1,
         newBook.Name,
         newBook.Genre,
@@ -63,7 +63,7 @@ group.MapPut("/{id}", (int id, UpdateBook updatebook) =>
         return Results.NotFound();
     }
     
-    books[index] = new Book(
+    books[index] = new BookDto(
         id,
         updatebook.Name,
         updatebook.Genre,
